@@ -14,4 +14,49 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+   <dependencies>
+       <dependency>
+           <groupId>com.sun.xml.bind</groupId>
+           <artifactId>jaxb-impl</artifactId>
+           <version>3.0.2</version>
+       </dependency>
+       <dependency>
+           <groupId>com.sun.xml.bind</groupId>
+           <artifactId>jaxb-core</artifactId>
+           <version>3.0.2</version>
+       </dependency>
+
+       <dependency>
+           <groupId>org.junit.jupiter</groupId>
+           <artifactId>junit-jupiter</artifactId>
+           <version>RELEASE</version>
+           <scope>test</scope>
+       </dependency>
+
+       <dependency>
+           <groupId>org.openjfx</groupId>
+           <artifactId>javafx-base</artifactId>
+           <version>18</version>
+       </dependency>
+       <dependency>
+           <groupId>org.openjfx</groupId>
+           <artifactId>javafx-controls</artifactId>
+           <version>18</version>
+       </dependency>
+       <dependency>
+           <groupId>org.openjfx</groupId>
+           <artifactId>javafx-fxml</artifactId>
+           <version>18</version>
+       </dependency>
+       <dependency>
+           <groupId>org.openjfx</groupId>
+           <artifactId>javafx-graphics</artifactId>
+           <version>18</version>
+       </dependency>
+       <dependency>
+           <groupId>org.openjfx</groupId>
+           <artifactId>javafx-media</artifactId>
+           <version>18</version>
+       </dependency>
+   </dependencies>
 </project>

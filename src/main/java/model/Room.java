@@ -1,9 +1,14 @@
 package model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.TreeSet;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Room {
     private String name;
     private String userNickname;
