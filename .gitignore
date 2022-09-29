@@ -1,0 +1,8 @@
+*
+!*/
+.idea
+target
+!*.java
+!pom.xml
+!.gitignore
+!logging.properties
