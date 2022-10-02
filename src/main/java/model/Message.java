@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,11 +16,12 @@ import java.util.Objects;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Message implements Comparable<Message>, Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String content;
     private String userNickname;
-    private Integer roomID;
+    private String room;
     @XmlElement
     @XmlJavaTypeAdapter(type = LocalDateTime.class, value = LocalDateTimeBind.class)
     private LocalDateTime time;
@@ -28,10 +30,10 @@ public class Message implements Comparable<Message>, Serializable {
         super();
     }
 
-    public Message(String userNickname, String content, Integer roomID) {
+    public Message(String userNickname, String content, String room) {
         this.content = content;
         this.userNickname = userNickname;
-        this.roomID = roomID;
+        this.room = room;
         this.time = LocalDateTime.now();
     }
 
@@ -51,12 +53,12 @@ public class Message implements Comparable<Message>, Serializable {
         this.userNickname = userNickname;
     }
 
-    public Integer getRoomID() {
-        return roomID;
+    public String getRoom() {
+        return room;
     }
 
-    public void setRoomID(Integer roomID) {
-        this.roomID = roomID;
+    public void setRoom(String room) {
+        this.room = room;
     }
 
     public LocalDateTime getTime() {
@@ -77,12 +79,12 @@ public class Message implements Comparable<Message>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return userNickname.equals(message.userNickname) && roomID.equals(message.roomID) && time.equals(message.time);
+        return userNickname.equals(message.userNickname) && room.equals(message.room) && time.equals(message.time);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userNickname, roomID, time);
+        return Objects.hash(userNickname, room, time);
     }
 
     @Override
@@ -90,7 +92,7 @@ public class Message implements Comparable<Message>, Serializable {
         return "Message{" +
                 "content='" + content + '\'' +
                 ", userNickname='" + userNickname + '\'' +
-                ", roomID=" + roomID +
+                ", room=" + room +
                 ", time=" + time +
                 '}';
     }

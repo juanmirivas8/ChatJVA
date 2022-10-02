@@ -30,7 +30,7 @@ public class JAXBManagerTests {
     //Test marshalling Message
     @Test
     public void testMarshallMessage() {
-        Message m = new Message("John", "Hello World",2);
+        Message m = new Message("John", "Hello World","2");
         JAXBManager.marshall("src/test/resources/message.xml", m);
     }
 
@@ -39,9 +39,9 @@ public class JAXBManagerTests {
     public void testMarshallRoom() {
         Room r = new Room("Room1", "John");
         //add messages to the room
-        r.getMessages().add(new Message("John", "Hello World",2));
-        r.getMessages().add(new Message("John", "Hello ",2));
-        r.getMessages().add(new Message("John", "Hello loco",2));
+        r.getMessages().add(new Message("John", "Hello World","2"));
+        r.getMessages().add(new Message("John", "Hello ","2"));
+        r.getMessages().add(new Message("John", "Hello loco","2"));
 
         JAXBManager.marshall("src/test/resources/room.xml", r);
     }
@@ -64,9 +64,9 @@ public class JAXBManagerTests {
         cj.getUsers().add(new User("John4", "holamundo4"));
 
 
-        Message m1 = new Message("John", "Hello World",2);
-        Message m2 = new Message("John", "Hello ",2);
-        Message m3 = new Message("John", "Hello loco",2);
+        Message m1 = new Message("John", "Hello World","1");
+        Message m2 = new Message("John", "Hello ","2");
+        Message m3 = new Message("John", "Hello loco","3");
 
         Room r1 = new Room("Room1", "John");
         Room r2 = new Room("Room2", "John");

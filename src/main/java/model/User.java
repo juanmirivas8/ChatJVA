@@ -5,11 +5,13 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import utils.Utils;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public User(){
