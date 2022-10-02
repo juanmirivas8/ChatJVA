@@ -4,11 +4,13 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ChatJAXB implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private ArrayList<User> users;
     private ArrayList<Room> rooms;
@@ -35,11 +37,10 @@ public class ChatJAXB implements Serializable {
         this.rooms = rooms;
     }
 
-    @Override
-    public String toString() {
-        return "ChatJAXB{" +
-                "users=" + users +
-                ", rooms=" + rooms +
-                '}';
+    public void addMessage(Message object) {
+        Room r = rooms.stream().filter(room -> room.getName().equals(object.getRoom())).findFirst().orElse(null);
+        if (r != null) {
+            r.addMessage(object);
+        }
     }
 }

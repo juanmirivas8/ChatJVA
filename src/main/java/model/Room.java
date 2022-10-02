@@ -3,21 +3,26 @@ package model;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Room implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private String name;
     private String userNickname;
 
     private ArrayList<Message> messages;
+
+    @XmlTransient
+    private ArrayList<String> users;
 
     public Room() {
         super();
@@ -72,5 +77,9 @@ public class Room implements Serializable {
 
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
+    }
+
+    public void addMessage(Message object) {
+        messages.add(object);
     }
 }
