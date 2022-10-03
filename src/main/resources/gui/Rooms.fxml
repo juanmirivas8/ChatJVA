@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane prefHeight="536.0" prefWidth="503.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Rooms">
+   <children>
+      <HBox layoutY="4.0" prefHeight="37.0" prefWidth="512.0" stylesheets="@css/style.css">
+         <children>
+            <Button fx:id="exit" mnemonicParsing="false" onAction="#exit" prefHeight="28.0" prefWidth="14.0">
+               <HBox.margin>
+                  <Insets left="10.0" top="3.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <ToggleButton fx:id="darkMode" alignment="CENTER_RIGHT" cache="true" contentDisplay="RIGHT" ellipsisString="" mnemonicParsing="false" onAction="#selectDarkMode" text="Dark mode" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="380.0" top="6.0" />
+               </HBox.margin>
+            </ToggleButton>
+         </children>
+      </HBox>
+      <TableView fx:id="roomsTable" layoutY="42.0" prefHeight="494.0" prefWidth="512.0">
+        <columns>
+          <TableColumn fx:id="room" prefWidth="511.0" text="Rooms" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
