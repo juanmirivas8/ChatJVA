@@ -13,23 +13,28 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Client {
-    private static Logger LOGGER = MyLogger.getLogger("/logging.properties");
-    private Socket socket;
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
-    private String username;
+public abstract class Client {
+    private static final Logger LOGGER = MyLogger.getLogger("/logging.properties");
+    private static boolean instance = false;
+    private static Socket socket;
+    private static ObjectInputStream objectInputStream;
+    private static ObjectOutputStream objectOutputStream;
+    private static String username;
 
-    public Client(Socket socket, String username){
+    public Client(){
         try{
-            this.socket = socket;
-            this.username = username;
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            if(!instance){
+                socket = new Socket("localhost", 8080);
+                objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                objectInputStream = new ObjectInputStream(socket.getInputStream());
+                instance = true;
+            }
         }catch (IOException e){
             LOGGER.log(Level.SEVERE,e.getMessage());
         }
     }
+
+    public abstract void refresh();
 
     public void send(){
         String buffer = "";
@@ -55,6 +60,8 @@ public class Client {
                             sendMessage(i);
                         }
                     }
+                    refresh();
+
                 } catch (IOException | ClassNotFoundException e) {
                     LOGGER.log(Level.SEVERE,e.getMessage());
                 }
@@ -76,4 +83,6 @@ public class Client {
         Message m = (Message) i.getObject();
         System.out.println(m);
     }
+
+
 }

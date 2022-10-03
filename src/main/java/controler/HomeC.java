@@ -40,7 +40,6 @@ public class HomeC implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
-
     }
 
     public void selectRoom(Room r){
