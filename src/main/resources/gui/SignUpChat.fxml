@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AntonioJesus.PubManagement.LoginController">
+<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUpC">
    <children>
       <VBox alignment="CENTER" style="-fx-background-color: #AD4713;">
          <children>
@@ -32,7 +32,7 @@
                      <children>
                         <ImageView fitHeight="71.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Downloads/perfil.png" />
+                              <Image url="@../images/perfil.png" />
                            </image>
                         </ImageView>
                         <TextField fx:id="txtUser" maxWidth="350.0">
@@ -49,7 +49,7 @@
                      <children>
                         <ImageView fitHeight="71.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Downloads/cerrar-con-llave.png" />
+                              <Image url="@../images/cerrar-con-llave.png" />
                            </image>
                         </ImageView>
                         <PasswordField fx:id="txtPassword" maxWidth="350.0" onAction="#eventAction">
@@ -83,7 +83,7 @@
             </Label>
             <ImageView fitHeight="206.0" fitWidth="233.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Downloads/charla.png" />
+                  <Image url="@../images/charla.png" />
                </image>
                <VBox.margin>
                   <Insets top="20.0" />
