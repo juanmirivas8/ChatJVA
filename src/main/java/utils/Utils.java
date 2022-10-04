@@ -1,10 +1,14 @@
 package utils;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,5 +79,25 @@ public class Utils {
             LOGGER.log(Level.SEVERE,MyLogger.exceptionInfo(e));
         }
         return null;
+    }
+    public boolean mostrarConfirmacion(String header,String description) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar");
+        alert.setHeaderText(header);
+        alert.setContentText(description);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void mostrarAlerta(String title, String header, String description) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(description);
+        alert.showAndWait();
     }
 }
