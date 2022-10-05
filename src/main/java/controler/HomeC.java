@@ -22,13 +22,22 @@ public class HomeC implements Initializable {
     private ToggleButton darkMode;
 
     @FXML
-    private ScrollPane messagePane, roomsPane;
+    private Label roomName;
 
     @FXML
-    private TableView<Room> roomsTable;
+    private TableView<Message> messageTable;
 
     @FXML
-    private TableColumn<Room, String> room;
+    private TableColumn<Message, String> userMessageColumn;
+    @FXML
+    private TableColumn<Message, String> messageMessageColumn;
+    @FXML
+    private TableColumn<Message, String> dateMessageColumn;
+
+    @FXML
+    private TableView<Room> usersTable;
+    @FXML
+    private TableColumn<Room, String> usersColumn;
 
 
     /**
@@ -55,6 +64,10 @@ public class HomeC implements Initializable {
     }
 
     public void exit(){
+        goExit();
+    }
+
+    private void goExit(){
 
     }
 
