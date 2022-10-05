@@ -1,17 +1,23 @@
 package controler;
 
+import client.App;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 import model.Room;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RoomsC implements Initializable {
+
+    App a = new App();
+    private static Stage stg=new Stage();
 
     @FXML
     private TableView<Room> roomsTable;
@@ -32,10 +38,19 @@ public class RoomsC implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        roomList();
+        roomsTable.refresh();
     }
 
-    public void selectRoom(Room r){
+    public void roomList(){
+        room.setCellValueFactory(r ->{
+            SimpleStringProperty ssp = new SimpleStringProperty();
+            ssp.setValue(r.getValue().getName());
+            return ssp;
+        });
+    }
+
+    public void selectRoom(){
 
     }
 
@@ -44,6 +59,10 @@ public class RoomsC implements Initializable {
     }
 
     public void exit(){
+        goExit();
+    }
 
+    private void goExit(){
+        App.loadScene(stg,"SingInChat.fxml","ChatJVA",true,true);
     }
 }
