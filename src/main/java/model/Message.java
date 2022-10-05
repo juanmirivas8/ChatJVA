@@ -98,8 +98,6 @@ public class Message implements Comparable<Message>, Serializable {
     }
 }
 
-
-
         class LocalDateTimeBind extends XmlAdapter<String, LocalDateTime> {
 
             @Override
@@ -111,5 +109,4 @@ public class Message implements Comparable<Message>, Serializable {
             public String marshal(LocalDateTime localDateTime) {
                 return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SS"));
             }
-
 }

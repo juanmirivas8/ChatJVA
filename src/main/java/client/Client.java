@@ -1,8 +1,6 @@
 package client;
 
-import model.Command;
-import model.Instruction;
-import model.Message;
+import model.*;
 import utils.MyLogger;
 
 import java.io.IOException;
@@ -14,13 +12,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class Client {
-    private static final Logger LOGGER = MyLogger.getLogger("/logging.properties");
+    protected static final Logger LOGGER = MyLogger.getLogger("/logging.properties");
     private static boolean instance = false;
     private static Socket socket;
     private static ObjectInputStream objectInputStream;
     private static ObjectOutputStream objectOutputStream;
-    private static String username;
-
+    protected static String username;
+    protected static Client controller;
+    private static ChatJAXB chatJAXB;
     public Client(){
         try{
             if(!instance){
@@ -28,6 +27,7 @@ public abstract class Client {
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 instance = true;
+                this.listen();
             }
         }catch (IOException e){
             LOGGER.log(Level.SEVERE,e.getMessage());
@@ -36,7 +36,7 @@ public abstract class Client {
 
     public abstract void refresh();
 
-    public void send(){
+    private void send(){
         String buffer = "";
         Scanner scanner = new Scanner(System.in);
         while (!buffer.equals("exit")){
@@ -50,7 +50,7 @@ public abstract class Client {
         }
     }
 
-    public void listen(){
+    private void listen(){
         new Thread(() -> {
             while (socket.isConnected()){
                 try {
@@ -60,7 +60,9 @@ public abstract class Client {
                             sendMessage(i);
                         }
                     }
-                    refresh();
+                    if(controller != null){
+                        controller.refresh();
+                    }
 
                 } catch (IOException | ClassNotFoundException e) {
                     LOGGER.log(Level.SEVERE,e.getMessage());
@@ -84,5 +86,16 @@ public abstract class Client {
         System.out.println(m);
     }
 
+    public void addUser(User user){
+
+    }
+
+    public void addRoom(Room room){
+
+    }
+
+    public void addMessage(Message message){
+
+    }
 
 }

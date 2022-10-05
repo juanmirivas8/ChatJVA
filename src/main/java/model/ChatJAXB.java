@@ -43,4 +43,12 @@ public class ChatJAXB implements Serializable {
             r.addMessage(object);
         }
     }
+
+    public void addUser(User user) {
+
+    }
+
+    public void addRoom(Room room) {
+
+    }
 }
