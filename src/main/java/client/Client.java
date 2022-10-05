@@ -18,7 +18,9 @@ public abstract class Client {
     private static ObjectInputStream objectInputStream;
     private static ObjectOutputStream objectOutputStream;
     protected static String username;
+    protected static String chat;
     protected static Client controller;
+
     private static ChatJAXB chatJAXB;
     public Client(){
         try{
@@ -86,8 +88,10 @@ public abstract class Client {
         System.out.println(m);
     }
 
-    public void addUser(User user){
+    public boolean addUser(User user){
 
+
+        return false;
     }
 
     public void addRoom(Room room){
