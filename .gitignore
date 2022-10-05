@@ -7,3 +7,5 @@ target
 !.gitignore
 !logging.properties
 !*.fxml
+!*.png
+!*.jpg
