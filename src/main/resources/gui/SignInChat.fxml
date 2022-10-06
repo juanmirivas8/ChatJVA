@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignInC">
+<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.SignInC">
    <children>
       <VBox alignment="CENTER" style="-fx-background-color: #AD4713;">
          <children>
@@ -36,7 +36,7 @@
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="txtUser" maxWidth="350.0">
+                  <TextField id="txtUser" fx:id="txtUser" maxWidth="350.0">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -55,7 +55,7 @@
                         <Insets left="20.0" />
                      </padding>
                   </Label>
-                  <PasswordField fx:id="txtPassword" maxWidth="350.0" onAction="#eventAction">
+                  <PasswordField id="txtPass" fx:id="txtPass" maxWidth="350.0" onAction="#eventAction">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -63,7 +63,7 @@
                         <Insets left="20.0" />
                      </VBox.margin>
                   </PasswordField>
-                  <Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eventAction" prefHeight="44.0" prefWidth="300.0" style="-fx-background-color: #48B3FA;" text="Sign in" textFill="WHITE">
+                  <Button id="btnSignIn" fx:id="btnSignIn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eventAction" prefHeight="44.0" prefWidth="300.0" style="-fx-background-color: #48B3FA;" text="Sign in" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -73,7 +73,7 @@
                   </Button>
                </children>
             </VBox>
-            <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#eventRegistro" style="-fx-background-color: #48B3FA;" text="Sign up" textAlignment="CENTER" textFill="WHITE">
+            <Button id="btnSignUp" fx:id="btnSignUp" mnemonicParsing="false" onAction="#eventRegistro" style="-fx-background-color: #48B3FA;" text="Sign up" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>

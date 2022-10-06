@@ -80,7 +80,7 @@ public class Utils {
         }
         return null;
     }
-    public boolean mostrarConfirmacion(String header,String description) {
+    public static boolean mostrarConfirmacion(String header,String description) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmar");
         alert.setHeaderText(header);
@@ -93,7 +93,7 @@ public class Utils {
             return false;
         }
     }
-    public void mostrarAlerta(String title, String header, String description) {
+    public static void mostrarAlerta(String title, String header, String description) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(header);
