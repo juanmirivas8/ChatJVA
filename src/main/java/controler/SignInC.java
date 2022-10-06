@@ -1,17 +1,25 @@
 package controler;
 
 import client.App;
+import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignInC {
+public class SignInC extends Client {
+
+
+    public SignInC() {
+        super();
+        Client.controller = this;
+    }
 
     @FXML
     private TextField txtUser;
@@ -27,6 +35,10 @@ public class SignInC {
 
     @FXML
     private void eventRegistro(ActionEvent event) throws IOException {
+        Object evt = event.getSource();
+        if(evt.equals(btnSignIn)){
+            client.App.loadScene(new Stage(),"SignUpChat","Pantalla Principal", false, false);
+        }
     }
     @FXML
     private void eventAction(ActionEvent event) throws IOException {
@@ -44,5 +56,10 @@ public class SignInC {
         }else{
             //Usar alerta de utils
         }
+    }
+
+    @Override
+    public void refresh() {
+        if ()
     }
 }
