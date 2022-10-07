@@ -1,14 +1,18 @@
 package client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import utils.MyLogger;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.Connection;
 import java.util.logging.Logger;
 
 public class App extends Application {
@@ -17,7 +21,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage){
-        loadScene(stage,"SignInChat","Bienvenido a ChatJVA",false,false);
+        loadScene(new Stage(),"gui/SignInChat","Bienvenido a ChatJVA",false,false);
     }
 
     /**

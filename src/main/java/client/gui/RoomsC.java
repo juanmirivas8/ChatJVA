@@ -1,4 +1,4 @@
-package controler;
+package client.gui;
 
 import client.App;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import model.Room;
+import utils.Utils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,6 +41,7 @@ public class RoomsC implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         roomList();
         roomsTable.refresh();
+        Utils.closeRequest(stg);
     }
 
     public void roomList(){
@@ -51,7 +53,7 @@ public class RoomsC implements Initializable {
     }
 
     public void selectRoom(){
-
+        App.loadScene(stg,"Home.fxml","ChatJVA",true,true);
     }
 
     public void selectDarkMode(){
