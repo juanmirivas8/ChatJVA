@@ -82,4 +82,12 @@ public class Room implements Serializable {
     public void addMessage(Message object) {
         messages.add(object);
     }
+
+    public void joinRoom(String nickname){
+        users.add(nickname);
+    }
+
+    public void leaveRoom(String nickname){
+        users.remove(nickname);
+    }
 }

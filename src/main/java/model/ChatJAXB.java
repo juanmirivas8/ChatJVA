@@ -37,18 +37,43 @@ public class ChatJAXB implements Serializable {
         this.rooms = rooms;
     }
 
-    public void addMessage(Message object) {
+    public boolean addMessage(Message object) {
         Room r = rooms.stream().filter(room -> room.getName().equals(object.getRoom())).findFirst().orElse(null);
         if (r != null) {
             r.addMessage(object);
+            return true;
+        }else{
+            return false;
         }
     }
 
-    public void addUser(User user) {
-
+    public boolean addUser(User user) {
+        if (findUser(user.getNickname())) {
+            return false;
+        } else {
+            users.add(user);
+            return true;
+        }
     }
 
-    public void addRoom(Room room) {
+    public boolean findUser(String name){
+        return users.stream().anyMatch(user -> user.getNickname().equals(name));
+    }
 
+    public boolean findRoom(String name){
+        return rooms.stream().anyMatch(room -> room.getName().equals(name));
+    }
+
+    public boolean addRoom(Room room) {
+        if(!findRoom(room.getName())){
+            rooms.add(room);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Room getRoom(String roomName) {
+        return rooms.stream().filter(room -> room.getName().equals(roomName)).findFirst().orElse(null);
     }
 }

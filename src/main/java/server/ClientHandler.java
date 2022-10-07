@@ -1,9 +1,6 @@
 package server;
 
-import model.ChatJAXB;
-import model.Command;
-import model.Instruction;
-import model.Message;
+import model.*;
 import utils.MyLogger;
 
 import java.io.IOException;
@@ -11,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +26,7 @@ public class ClientHandler implements Runnable {
         try {
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
+            
             clients.add(this);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE,e.getMessage());
@@ -42,7 +41,10 @@ public class ClientHandler implements Runnable {
                 Instruction i = (Instruction) objectInputStream.readObject();
                 switch (i.getCommand()){
                     case SEND_MESSAGE -> sendMessage(i);
-
+                    case CREATE_USER -> createUser(i);
+                    case CREATE_ROOM -> createRoom(i);
+                    case JOIN_ROOM -> joinRoom(i);
+                    case LEAVE_ROOM -> leaveRoom(i);
                 }
             }catch (IOException | ClassNotFoundException e){
                 LOGGER.log(Level.SEVERE,e.getMessage());
@@ -50,6 +52,62 @@ public class ClientHandler implements Runnable {
         }
     }
 
+
+
+
+    /**************************************************************************
+     * Socket Listening Handling
+     *************************************************************************/
+    private void leaveRoom(Instruction i) {
+        Room room = chatJAXB.getRoom((String)i.getObject());
+        room.leaveRoom(i.getUsername());
+
+        clients.forEach(clientHandler -> {
+            try{
+                if(!clientHandler.username.equals(i.getUsername())){
+                    clientHandler.objectOutputStream.writeObject(i);
+                }
+            }catch (IOException e){
+                LOGGER.log(Level.SEVERE,e.getMessage());
+            }
+        });
+    }
+
+    private void joinRoom(Instruction i) {
+        List<Object> params = (List<Object>) i.getObject();
+        String roomName = (String) params.get(0);
+        String username = (String) params.get(1);
+
+        Room room = chatJAXB.getRoom(roomName);
+        room.joinRoom(username);
+        clients.forEach(clientHandler -> {
+            try{
+                if(!clientHandler.username.equals(i.getUsername())){
+                    clientHandler.objectOutputStream.writeObject(i);
+                }
+            }catch (IOException e){
+                LOGGER.log(Level.SEVERE,e.getMessage());
+            }
+
+        });
+    }
+
+    private void createUser(Instruction i) {
+        User user = (User) i.getObject();
+        chatJAXB.addUser(user);
+
+
+        clients.forEach(clientHandler -> {
+            try {
+                if(!clientHandler.username.equals(i.getUsername())){
+                    clientHandler.objectOutputStream.writeObject(i);
+                }
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE,e.getMessage());
+            }
+        });
+
+    }
 
     private void removeClient(){
         clients.remove(this);
@@ -70,7 +128,23 @@ public class ClientHandler implements Runnable {
         chatJAXB.addMessage((Message)i.getObject());
         clients.forEach(clientHandler -> {
             try {
-                clientHandler.objectOutputStream.writeObject(i);
+                if(!clientHandler.username.equals(i.getUsername())) {
+                    clientHandler.objectOutputStream.writeObject(i);
+                }
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE,e.getMessage());
+            }
+        });
+    }
+
+    private void createRoom(Instruction i) {
+        Room room = (Room) i.getObject();
+        chatJAXB.addRoom(room);
+        clients.forEach(clientHandler -> {
+            try {
+                if(!clientHandler.username.equals(i.getUsername())) {
+                    clientHandler.objectOutputStream.writeObject(i);
+                }
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE,e.getMessage());
             }
