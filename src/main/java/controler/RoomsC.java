@@ -55,7 +55,13 @@ public class RoomsC implements Initializable {
     }
 
     public void selectDarkMode(){
-
+        darkMode.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+            if (isSelected) {
+                //scene.getStyleSheets().add("dark-theme.css");
+            } else {
+                //scene.getStyleSheets().remove("dark-theme.css");
+            }
+        });
     }
 
     public void exit(){

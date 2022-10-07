@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import jdk.jshell.execution.Util;
 import model.Message;
 import model.User;
 
@@ -68,7 +69,7 @@ public class HomeC extends Client implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.roomName.setText(this.roomname);
+        this.roomName.setText(this.roomname.getName());
         messageList();
         usersList();
         messageTable.refresh();
@@ -107,14 +108,21 @@ public class HomeC extends Client implements Initializable {
     private void sendMessage(){
         String n = messageWriter.getText();
         if(!messageWriter.getText().isEmpty()){
-            Message m = new Message(this.username,n,this.roomname);
+            Message m = new Message(this.username,n,this.roomname.getName());
             this.addMessage(m);
+            messageTable.getColumns().addAll(userMessageColumn,messageMessageColumn,dateMessageColumn);
             refresh();
         }
     }
 
     public void selectDarkMode(){
-
+        darkMode.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+            if (isSelected) {
+                //scene.getStyleSheets().add("dark-theme.css");
+            } else {
+                //scene.getStyleSheets().remove("dark-theme.css");
+            }
+        });
     }
 
     public void exit(){
