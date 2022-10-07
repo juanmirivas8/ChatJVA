@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,13 +23,14 @@ public abstract class Client {
     protected static String chat;
     protected static Client controller;
 
-    private static ChatJAXB chatJAXB;
+    protected static ChatJAXB chatJAXB;
     public Client(){
         try{
             if(!instance){
                 socket = new Socket("localhost", 8080);
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
+
                 instance = true;
                 this.listen();
             }
@@ -37,20 +40,107 @@ public abstract class Client {
     }
 
     public abstract void refresh();
-
-    private void send(){
-        String buffer = "";
-        Scanner scanner = new Scanner(System.in);
-        while (!buffer.equals("exit")){
-            try{
-                System.out.println("Enter your message: ");
-                buffer = scanner.nextLine();
-                objectOutputStream.writeObject(new Instruction(new Message("juanmi",buffer,"CFGS DAM"),Command.SEND_MESSAGE,"juanmi" ));
-            }catch (IOException e){
-                LOGGER.log(Level.SEVERE,e.getMessage());
-            }
+    /**************************************************************************
+     * ChatJAXB && Controller Handling
+     *************************************************************************/
+    public boolean localAddUser(User user){
+        if(chatJAXB.addUser(user)){
+            broadcastNewUser(user);
+            refresh();
+            return true;
+        }else{
+            return false;
         }
     }
+    public void localAddRoom(Room room){
+        if(chatJAXB.addRoom(room)){
+            broadcastNewRoom(room);
+        }
+        refresh();
+    }
+
+
+
+    public void localAddMessage(Message message){
+        chatJAXB.addMessage(message);
+        broadcastNewMessage(message);
+        refresh();
+    }
+
+    public void localLogin(User user){
+
+
+    }
+    public void localLogout(){
+
+    }
+
+    public void localJoinRoom(Room room){
+        chat = room.getName();
+        room.joinRoom(username);
+        List<Object> params = new ArrayList<>();
+        params.add(room.getName());
+        params.add(username);
+        broadcastJoinRoom(params);
+        refresh();
+    }
+
+
+    public void localLeaveRoom(){
+        Room room = chatJAXB.getRoom(chat);
+        room.leaveRoom(username);
+        chat = null;
+        broadcastLeaveRoom(room.getName());
+        refresh();
+    }
+
+
+
+    /**************************************************************************
+     * Socket Sending Handling
+     *************************************************************************/
+    private void broadcastLeaveRoom(String roomName){
+        Instruction i = new Instruction(roomName, Command.LEAVE_ROOM,username);
+        try {
+            objectOutputStream.writeObject(i);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,e.getMessage());
+        }
+    }
+
+    private void broadcastJoinRoom(List<Object> params) {
+        Instruction i = new Instruction(params,Command.JOIN_ROOM,username);
+        try {
+            objectOutputStream.writeObject(i);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,e.getMessage());
+        }
+    }
+    private void broadcastNewUser(User user) {
+        try {
+            objectOutputStream.writeObject(new Instruction(user,Command.CREATE_USER,username));
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,e.getMessage());
+        }
+    }
+    private void broadcastNewMessage(Message message) {
+        try {
+            objectOutputStream.writeObject(new Instruction(message,Command.SEND_MESSAGE,username));
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,e.getMessage());
+        }
+    }
+
+    private void broadcastNewRoom(Room room) {
+        try {
+            objectOutputStream.writeObject(new Instruction(room,Command.CREATE_ROOM,username));
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,e.getMessage());
+        }
+    }
+    /**************************************************************************
+     * Socket Listening Handling
+     *************************************************************************/
 
     private void listen(){
         new Thread(() -> {
@@ -58,9 +148,13 @@ public abstract class Client {
                 try {
                     Instruction i = (Instruction) objectInputStream.readObject();
                     switch (i.getCommand()){
-                        case SEND_MESSAGE -> {
-                            sendMessage(i);
-                        }
+                        case CREATE_USER -> remoteCreateUser(i);
+                        case SEND_MESSAGE -> remoteSendMessage(i);
+                        case CREATE_ROOM -> remoteCreateRoom(i);
+                        case JOIN_ROOM -> remoteJoinRoom(i);
+                        case LEAVE_ROOM -> remoteLeaveRoom(i);
+                        case LOGOUT -> remoteLogout(i);
+                        case LOGIN -> remoteLogin(i);
                     }
                     if(controller != null){
                         controller.refresh();
@@ -73,6 +167,45 @@ public abstract class Client {
         }).start();
     }
 
+    private void remoteLogin(Instruction i) {
+    }
+
+    private void remoteLogout(Instruction i) {
+    }
+
+
+    private void remoteLeaveRoom(Instruction i) {
+        Room room = chatJAXB.getRoom((String)i.getObject());
+        room.leaveRoom(i.getUsername());
+        refresh();
+    }
+
+    private void remoteJoinRoom(Instruction i) {
+        List<Object> params = (List<Object>) i.getObject();
+        String roomName = (String) params.get(0);
+        String username = (String) params.get(1);
+
+        Room room = chatJAXB.getRoom(roomName);
+        room.joinRoom(username);
+        refresh();
+    }
+
+    private void remoteCreateRoom(Instruction i) {
+        chatJAXB.addRoom((Room) i.getObject());
+        refresh();
+    }
+
+    private void remoteSendMessage(Instruction i) {
+        Message message = (Message) i.getObject();
+        chatJAXB.addMessage(message);
+        refresh();
+    }
+
+    private void remoteCreateUser(Instruction i) {
+        User user = (User) i.getObject();
+        chatJAXB.addUser(user);
+    }
+
     private void closeEverything(){
         try {
             objectInputStream.close();
@@ -82,24 +215,4 @@ public abstract class Client {
             LOGGER.log(Level.SEVERE,e.getMessage());
         }
     }
-
-    private void sendMessage(Instruction i){
-        Message m = (Message) i.getObject();
-        System.out.println(m);
-    }
-
-    public boolean addUser(User user){
-
-
-        return false;
-    }
-
-    public void addRoom(Room room){
-
-    }
-
-    public void addMessage(Message message){
-
-    }
-
 }

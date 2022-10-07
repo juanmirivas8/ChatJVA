@@ -6,6 +6,6 @@ public enum Command {
     JOIN_ROOM,
     LEAVE_ROOM,
     CREATE_USER,
-    DELETE_USER
-
+    LOGIN,
+    LOGOUT
 }
