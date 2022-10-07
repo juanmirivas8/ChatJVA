@@ -1,6 +1,5 @@
-package controler;
+package client.gui;
 
-import client.App;
 import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class SignInC extends Client {
 
@@ -60,6 +57,6 @@ public class SignInC extends Client {
 
     @Override
     public void refresh() {
-        if ()
+        //if ()
     }
 }

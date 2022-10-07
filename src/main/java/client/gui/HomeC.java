@@ -1,4 +1,4 @@
-package controler;
+package client.gui;
 
 import client.App;
 import client.Client;
@@ -9,9 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import jdk.jshell.execution.Util;
 import model.Message;
 import model.User;
+import utils.Utils;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -69,11 +69,12 @@ public class HomeC extends Client implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.roomName.setText(this.roomname.getName());
+        this.roomName.setText(this.chat);
         messageList();
         usersList();
         messageTable.refresh();
         usersTable.refresh();
+        Utils.closeRequest(stg);
 
     }
 
@@ -108,8 +109,8 @@ public class HomeC extends Client implements Initializable {
     private void sendMessage(){
         String n = messageWriter.getText();
         if(!messageWriter.getText().isEmpty()){
-            Message m = new Message(this.username,n,this.roomname.getName());
-            this.addMessage(m);
+            Message m = new Message(this.username,n,this.chat);
+            this.localAddMessage(m);
             messageTable.getColumns().addAll(userMessageColumn,messageMessageColumn,dateMessageColumn);
             refresh();
         }
@@ -130,7 +131,7 @@ public class HomeC extends Client implements Initializable {
     }
 
     private void goExit(){
-        App.loadScene(stg,"Home.fxml","ChatJVA",true,true);
+        App.loadScene(stg,"Rooms.fxml","ChatJVA",true,true);
     }
 
 
