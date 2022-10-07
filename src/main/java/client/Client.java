@@ -30,11 +30,11 @@ public abstract class Client {
                 socket = new Socket("localhost", 8080);
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
-
+                chatJAXB = (ChatJAXB) objectInputStream.readObject();
                 instance = true;
                 this.listen();
             }
-        }catch (IOException e){
+        }catch (IOException|ClassNotFoundException e){
             LOGGER.log(Level.SEVERE,e.getMessage());
         }
     }
@@ -52,11 +52,14 @@ public abstract class Client {
             return false;
         }
     }
-    public void localAddRoom(Room room){
+    public boolean localAddRoom(Room room){
         if(chatJAXB.addRoom(room)){
             broadcastNewRoom(room);
+            refresh();
+            return true;
+        }else{
+            return false;
         }
-        refresh();
     }
 
 
@@ -67,13 +70,22 @@ public abstract class Client {
         refresh();
     }
 
-    public void localLogin(User user){
-
+    public boolean localLogin(User user){
+        if(chatJAXB.login(user)){
+            username = user.getNickname();
+            return true;
+        }else{
+            return false;
+        }
 
     }
     public void localLogout(){
-
+        chatJAXB.logout(username);
+        braoadcastLogout(username);
+        username = null;
     }
+
+
 
     public void localJoinRoom(Room room){
         chat = room.getName();
@@ -99,6 +111,9 @@ public abstract class Client {
     /**************************************************************************
      * Socket Sending Handling
      *************************************************************************/
+
+    private void braoadcastLogout(String username) {
+    }
     private void broadcastLeaveRoom(String roomName){
         Instruction i = new Instruction(roomName, Command.LEAVE_ROOM,username);
         try {
