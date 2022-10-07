@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="610.0" type="BorderPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeC">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="610.0" type="BorderPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.HomeC">
    <right>
       <ScrollPane fx:id="roomsPane" prefHeight="400.0" prefWidth="133.0" BorderPane.alignment="CENTER">
          <content>
@@ -29,7 +29,7 @@
    <bottom>
       <HBox prefHeight="48.0" prefWidth="600.0" styleClass="bottonColor" stylesheets="@css/style.css" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="messageWriter" onAction="#sendMessage" prefHeight="36.0" prefWidth="366.0" promptText="Escribir mensaje" styleClass="messageBar">
+            <TextField fx:id="messageWriter" prefHeight="36.0" prefWidth="366.0" promptText="Escribir mensaje" styleClass="messageBar">
                <HBox.margin>
                   <Insets left="30.0" right="20.0" top="5.0" />
                </HBox.margin>
@@ -41,7 +41,7 @@
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/send.png" />
+                        <Image url="@../images/send.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -76,7 +76,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/back.png" />
+                              <Image url="@../images/back.png" />
                            </image>
                         </ImageView>
                      </graphic>

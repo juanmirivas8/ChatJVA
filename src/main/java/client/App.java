@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage){
-        loadScene(stage,"launch","Bienvenido a Medieval Game",false,false);
+        loadScene(stage,"SignInChat","Bienvenido a ChatJVA",false,false);
     }
 
     /**
