@@ -26,8 +26,8 @@ public class ClientHandler implements Runnable {
         try {
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
-            
             clients.add(this);
+            objectOutputStream.writeObject(chatJAXB);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE,e.getMessage());
 
@@ -45,6 +45,8 @@ public class ClientHandler implements Runnable {
                     case CREATE_ROOM -> createRoom(i);
                     case JOIN_ROOM -> joinRoom(i);
                     case LEAVE_ROOM -> leaveRoom(i);
+                    case LOGIN -> login(i);
+                    case LOGOUT -> logout(i);
                 }
             }catch (IOException | ClassNotFoundException e){
                 LOGGER.log(Level.SEVERE,e.getMessage());
@@ -52,7 +54,12 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    private void logout(Instruction i) {
+    }
 
+    private void login(Instruction i) {
+        
+    }
 
 
     /**************************************************************************

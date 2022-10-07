@@ -76,4 +76,13 @@ public class ChatJAXB implements Serializable {
     public Room getRoom(String roomName) {
         return rooms.stream().filter(room -> room.getName().equals(roomName)).findFirst().orElse(null);
     }
+
+    public boolean login(User user) {
+        return users.stream().anyMatch(user1 -> user1.getNickname().equals(user.getNickname()) && user1.getPassword().equals(user.getPassword()));
+    }
+
+    public void logout(String nickname) {
+        //recorre todas las salas y elimina al usuario de la lista de usuarios
+        rooms.forEach(room -> room.leaveRoom(nickname));
+    }
 }
