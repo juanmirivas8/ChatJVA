@@ -55,6 +55,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void logout(Instruction i) {
+
     }
 
     private void login(Instruction i) {

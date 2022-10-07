@@ -73,15 +73,17 @@ public abstract class Client {
     public boolean localLogin(User user){
         if(chatJAXB.login(user)){
             username = user.getNickname();
+            broadcastLogin(username);
             return true;
         }else{
             return false;
         }
 
     }
+
     public void localLogout(){
         chatJAXB.logout(username);
-        braoadcastLogout(username);
+        broadcastLogout(username);
         username = null;
     }
 
@@ -112,7 +114,22 @@ public abstract class Client {
      * Socket Sending Handling
      *************************************************************************/
 
-    private void braoadcastLogout(String username) {
+    private void broadcastLogout(String username) {
+        Instruction i = new Instruction(username,Command.LOGOUT,username);
+        try {
+            objectOutputStream.writeObject(i);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,e.getMessage());
+        }
+    }
+
+    private void broadcastLogin(String username) {
+        Instruction i = new Instruction(username,Command.LOGIN,username);
+        try {
+            objectOutputStream.writeObject(i);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,e.getMessage());
+        }
     }
     private void broadcastLeaveRoom(String roomName){
         Instruction i = new Instruction(roomName, Command.LEAVE_ROOM,username);
@@ -169,7 +186,6 @@ public abstract class Client {
                         case JOIN_ROOM -> remoteJoinRoom(i);
                         case LEAVE_ROOM -> remoteLeaveRoom(i);
                         case LOGOUT -> remoteLogout(i);
-                        case LOGIN -> remoteLogin(i);
                     }
                     if(controller != null){
                         controller.refresh();
@@ -182,10 +198,9 @@ public abstract class Client {
         }).start();
     }
 
-    private void remoteLogin(Instruction i) {
-    }
-
     private void remoteLogout(Instruction i) {
+        chatJAXB.logout((String) i.getObject());
+        refresh();
     }
 
 
