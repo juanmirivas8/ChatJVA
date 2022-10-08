@@ -36,6 +36,16 @@ public class Room implements Serializable {
         users = new ArrayList<>();
     }
 
+    public ArrayList<String> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<String> users) {
+        this.users = users;
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

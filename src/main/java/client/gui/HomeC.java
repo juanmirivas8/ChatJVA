@@ -9,28 +9,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.ChatJAXB;
 import model.Message;
 import model.Room;
 import model.User;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import utils.Utils;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,18 +25,16 @@ import java.util.ResourceBundle;
 public class HomeC extends Client implements Initializable {
 
     public HomeC() {
-
         super();
         controller=this;
     }
 
-    private static final String chatName = "chat.xml";
+    Room room = chatJAXB.getRoom(this.chat);
 
-    List<User> listUsers = chatJAXB.getUsers();
-    List<Message> listMessage = new ArrayList<>();
-    List<Room> roomChat = chatJAXB.getRooms();
+    List<String> listUsers = room.getUsers();
+    List<Message> listMessage = room.getMessages();
 
-    private ObservableList<User> observableUsers = FXCollections.observableArrayList(listUsers);
+    private ObservableList<String> observableUsers = FXCollections.observableArrayList(listUsers);
     private ObservableList<Message> observableMessage = FXCollections.observableArrayList(listMessage);
 
     @FXML
@@ -77,9 +62,9 @@ public class HomeC extends Client implements Initializable {
     private TableColumn<Message, String> dateMessageColumn;
 
     @FXML
-    private TableView<User> usersTable;
+    private TableView<String> usersTable;
     @FXML
-    private TableColumn<User, String> usersColumn;
+    private TableColumn<String, String> usersColumn;
 
     @FXML
     private BorderPane borderPane;
@@ -96,25 +81,14 @@ public class HomeC extends Client implements Initializable {
         System.out.println(listUsers);
         System.out.println(listMessage);
 
-        this.roomName.setText(this.chat);
+        this.roomName.setText(room.getName());
 
 
-        try {
-            messageTable.getItems().addAll((Message) readXMLData());
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
+        messageTable.setItems(observableMessage);
+        usersTable.setItems(observableUsers);
 
         messageList();
         usersList();
-        messageTable.refresh();
-        usersTable.refresh();
 
         Platform.runLater(()->{
             Utils.closeRequest((Stage) borderPane.getScene().getWindow(),controller);
@@ -122,7 +96,16 @@ public class HomeC extends Client implements Initializable {
 
 
     }
+    public void enter(){
+        messageWriter.setOnKeyPressed( event -> {
+            if(event.getCode() == KeyCode.ENTER) {
+                sendMessage();
+            }
+        });
+    }
 
+
+    /*
     private List<ChatJAXB> readXMLData() throws ParserConfigurationException, IOException, SAXException, XMLStreamException {
 
         DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -159,6 +142,7 @@ public class HomeC extends Client implements Initializable {
 
         return chat;
     }
+     */
 
     public void messageList(){
         userMessageColumn.setCellValueFactory(message ->{
@@ -183,20 +167,25 @@ public class HomeC extends Client implements Initializable {
     public void usersList(){
         usersColumn.setCellValueFactory(user ->{
             SimpleStringProperty ssp = new SimpleStringProperty();
-            ssp.setValue(user.getValue().getNickname());
+            ssp.setValue(user.getValue());
             return ssp;
         });
+
+        if (listUsers.remove(room.getUserNickname())){
+            observableUsers.removeAll(observableUsers);
+            observableUsers.addAll(listUsers);
+        }
     }
 
 
     public void sendMessage(){
         String n = messageWriter.getText();
-        this.username = "victor";
-        this.chat="Room1";
         if(!messageWriter.getText().isEmpty()){
             Message m = new Message(this.username,n,this.chat);
             this.localAddMessage(m);
-            messageTable.getColumns().addAll(userMessageColumn,messageMessageColumn,dateMessageColumn);
+            messageWriter.clear();
+            observableMessage.removeAll(observableMessage);
+            observableMessage.addAll(listMessage);
             refresh();
         }
     }
