@@ -2,6 +2,7 @@ package client.gui;
 
 import client.App;
 import client.Client;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,7 +49,9 @@ public class RoomsC extends Client implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         roomList();
         roomsTable.refresh();
-        //Utils.closeRequest((Stage) anchorPane.getScene().getWindow());
+        Platform.runLater(()->{
+            Utils.closeRequest((Stage) anchorPane.getScene().getWindow(),controller);
+        });
     }
 
     public void roomList(){
@@ -60,7 +63,7 @@ public class RoomsC extends Client implements Initializable {
     }
 
     public void selectRoom(){
-        App.loadScene(new Stage(),"gui/Home","ChatJVA",true,true);
+        App.loadScene(new Stage(),"gui/Home","ChatJVA",false,false);
     }
 
     public void selectDarkMode(){
@@ -78,7 +81,7 @@ public class RoomsC extends Client implements Initializable {
     }
 
     private void goExit(){
-        App.loadScene(new Stage(),"gui/SignInChat","ChatJVA",true,true);
+        App.loadScene(new Stage(),"gui/SignInChat","ChatJVA",false,false);
         App.closeScene((Stage) exit.getScene().getWindow());
     }
 
