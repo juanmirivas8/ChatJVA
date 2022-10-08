@@ -11,7 +11,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.SignUpC">
+
+
    <children>
       <VBox alignment="CENTER" style="-fx-background-color: #AD4713;">
          <children>
@@ -52,7 +55,7 @@
                               <Image url="@../../images/cerrar-con-llave.png" />
                            </image>
                         </ImageView>
-                        <PasswordField fx:id="txtPassword" maxWidth="350.0" onAction="#eventAction">
+                        <PasswordField fx:id="txtPass" maxWidth="350.0" onAction="#eventAction">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -64,7 +67,9 @@
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#eventAction" style="-fx-background-color: #48B3FA;" text="Sign up" textAlignment="CENTER" textFill="WHITE">
+
+            <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#eventAction" style="-fx-background-color: #48B3FA;" text="Sign up" textAlignment="CENTER" textFill="WHITE">
+
                <font>
                   <Font size="20.0" />
                </font>
