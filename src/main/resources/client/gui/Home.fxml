@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="610.0" type="BorderPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.HomeC">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.HomeC">
    <bottom>
       <HBox prefHeight="48.0" prefWidth="600.0" styleClass="bottonColor" BorderPane.alignment="CENTER">
          <children>
@@ -44,7 +44,7 @@
       </HBox>
    </bottom>
    <center>
-      <TableView fx:id="messageTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="messageTable" onSort="#messageList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="userMessageColumn" prefWidth="101.0" />
           <TableColumn fx:id="messageMessageColumn" prefWidth="293.0" />
@@ -86,10 +86,10 @@
       </VBox>
    </top>
    <right>
-      <TableView fx:id="usersTable" prefHeight="360.0" prefWidth="134.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="usersTable" onSort="#usersList" prefHeight="360.0" prefWidth="134.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="usersColumn" prefWidth="133.0" text="Users" />
         </columns>
       </TableView>
    </right>
-</fx:root>
+</BorderPane>

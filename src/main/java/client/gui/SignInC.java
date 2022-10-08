@@ -3,15 +3,19 @@ package client.gui;
 import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import utils.Utils;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SignInC extends Client {
-
+public class SignInC extends Client implements Initializable {
 
     public SignInC() {
         super();
@@ -30,6 +34,16 @@ public class SignInC extends Client {
 
     @FXML
     private Button btnSignUp;
+
+    @FXML
+    private HBox hBox;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //Utils.closeRequest((Stage) hBox.getScene().getWindow());
+    }
 
     @FXML
     private void eventRegistro(ActionEvent event) throws IOException {
@@ -60,4 +74,5 @@ public class SignInC extends Client {
     public void refresh() {
         //if ()
     }
+
 }
