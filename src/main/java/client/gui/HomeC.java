@@ -22,10 +22,11 @@ import java.util.ResourceBundle;
 public class HomeC extends Client implements Initializable {
 
     public HomeC() {
+
         super();
+        controller=this;
     }
 
-    private static Stage stg=new Stage();
 
     List<User> listUsers = new ArrayList<>();
     List<Message> listMessage = new ArrayList<>();
@@ -67,6 +68,7 @@ public class HomeC extends Client implements Initializable {
      * @param resourceBundle
      */
     @Override
+    @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         /*
         this.roomName.setText(this.chat);
@@ -76,7 +78,7 @@ public class HomeC extends Client implements Initializable {
         usersTable.refresh();
 
          */
-        Utils.closeRequest(stg);
+        //Utils.closeRequest(stg);
 
     }
 
@@ -133,7 +135,7 @@ public class HomeC extends Client implements Initializable {
     }
 
     private void goExit(){
-        App.loadScene(stg,"gui/Rooms","ChatJVA",true,true);
+        App.loadScene( new Stage(),"gui/Rooms","ChatJVA",true,true);
     }
 
 
