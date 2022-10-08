@@ -7,6 +7,8 @@ import utils.MyLogger;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,17 @@ public class Server {
     public void startServer() {
        try{
            chatJAXB = JAXBManager.unmarshall("src/main/resources/chat.xml",ChatJAXB.class);
+
+           Timer timer = new Timer(true);
+           timer.scheduleAtFixedRate(new TimerTask() {
+               @Override
+               public void run() {
+                   JAXBManager.marshall("src/main/resources/chat.xml",chatJAXB);
+                   //TODO:borrar despues de los test
+                   System.out.println(chatJAXB);
+               }
+           },10000,10000);
+
            while (!serverSocket.isClosed()) {
                Socket socket = serverSocket.accept();
                LOGGER.info("Client connected");
