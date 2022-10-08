@@ -20,6 +20,7 @@ public class SignInC extends Client implements Initializable {
     public SignInC() {
         super();
         Client.controller = this;
+        LOGGER.info(chatJAXB.toString());
     }
 
     @FXML

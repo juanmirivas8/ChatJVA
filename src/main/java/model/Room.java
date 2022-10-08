@@ -26,11 +26,14 @@ public class Room implements Serializable {
 
     public Room() {
         super();
+        messages = new ArrayList<>();
+        users = new ArrayList<>();
     }
     public Room(String name, String userNickname) {
         this.name = name;
         this.userNickname = userNickname;
         messages = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     @Override

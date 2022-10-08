@@ -16,13 +16,14 @@ public class ClientHandler implements Runnable {
     private static final Logger LOGGER = MyLogger.getLogger("/logging.properties");
     private static final ArrayList<ClientHandler> clients = new ArrayList<>();
     private static ChatJAXB chatJAXB;
-    private final Socket socket;
+    private Socket socket;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
     private String username;
     public ClientHandler(Socket socket, ChatJAXB chatJAXB) {
         this.socket = socket;
         ClientHandler.chatJAXB = chatJAXB;
+        username="";
         try {
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
@@ -30,13 +31,12 @@ public class ClientHandler implements Runnable {
             objectOutputStream.writeObject(chatJAXB);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE,e.getMessage());
-
         }
     }
 
     @Override
     public void run() {
-        while (socket.isConnected()){
+        while (!socket.isClosed()){
             try{
                 Instruction i = (Instruction) objectInputStream.readObject();
                 switch (i.getCommand()){
@@ -47,18 +47,38 @@ public class ClientHandler implements Runnable {
                     case LEAVE_ROOM -> leaveRoom(i);
                     case LOGIN -> login(i);
                     case LOGOUT -> logout(i);
+                    case EXIT -> exit(i);
                 }
             }catch (IOException | ClassNotFoundException e){
-                LOGGER.log(Level.SEVERE,e.getMessage());
+                LOGGER.log(Level.SEVERE,e,()->"");
             }
         }
     }
 
+    private void exit(Instruction i) {
+        clients.remove(this);
+        i.setCommand(Command.LOGOUT);
+        logout(i);
+        closeEverything();
+
+    }
+
     private void logout(Instruction i) {
+        chatJAXB.logout(i.getUsername());
+        clients.forEach(clientHandler -> {
+            try{
+                if(!clientHandler.username.equals(i.getUsername())){
+                    clientHandler.objectOutputStream.writeObject(i);
+                }
+            }catch (IOException e){
+                LOGGER.log(Level.SEVERE,e,()->"");
+            }
+        });
+
     }
 
     private void login(Instruction i) {
-        
+        username = i.getUsername();
     }
 
 
@@ -115,13 +135,8 @@ public class ClientHandler implements Runnable {
         });
 
     }
-
-    private void removeClient(){
-        clients.remove(this);
-        //notificar
-    }
     private void closeEverything(){
-        removeClient();
+
         try {
             objectInputStream.close();
             objectOutputStream.close();

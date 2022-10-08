@@ -85,4 +85,12 @@ public class ChatJAXB implements Serializable {
         //recorre todas las salas y elimina al usuario de la lista de usuarios
         rooms.forEach(room -> room.leaveRoom(nickname));
     }
+
+    @Override
+    public String toString() {
+        return "ChatJAXB{" +
+                "users=" + users +
+                ", rooms=" + rooms +
+                '}';
+    }
 }
