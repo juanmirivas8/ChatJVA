@@ -71,6 +71,6 @@ public class RoomsC implements Initializable {
     }
 
     private void goExit(){
-        App.loadScene(stg,"SingInChat.fxml","ChatJVA",true,true);
+        App.loadScene(stg,"gui/SingInChat","ChatJVA",true,true);
     }
 }
