@@ -25,7 +25,6 @@ public class HomeC extends Client implements Initializable {
         super();
     }
 
-    App a = new App();
     private static Stage stg=new Stage();
 
     List<User> listUsers = new ArrayList<>();
@@ -69,11 +68,14 @@ public class HomeC extends Client implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        /*
         this.roomName.setText(this.chat);
         messageList();
         usersList();
         messageTable.refresh();
         usersTable.refresh();
+
+         */
         Utils.closeRequest(stg);
 
     }
@@ -106,7 +108,7 @@ public class HomeC extends Client implements Initializable {
         });
     }
 
-    private void sendMessage(){
+    public void sendMessage(){
         String n = messageWriter.getText();
         if(!messageWriter.getText().isEmpty()){
             Message m = new Message(this.username,n,this.chat);
@@ -131,7 +133,7 @@ public class HomeC extends Client implements Initializable {
     }
 
     private void goExit(){
-        App.loadScene(stg,"Rooms.fxml","ChatJVA",true,true);
+        App.loadScene(stg,"gui/Rooms","ChatJVA",true,true);
     }
 
 
