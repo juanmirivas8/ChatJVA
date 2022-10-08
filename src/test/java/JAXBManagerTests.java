@@ -58,35 +58,30 @@ public class JAXBManagerTests {
     public void testMarshallChatJAXB() {
         ChatJAXB cj = new ChatJAXB();
 
+       //add users to the chat
         cj.getUsers().add(new User("John", "holamundo"));
         cj.getUsers().add(new User("John2", "holamundo2"));
-        cj.getUsers().add(new User("John3", "holamundo3"));
-        cj.getUsers().add(new User("John4", "holamundo4"));
 
+        //add rooms to the chat
+        cj.getRooms().add(new Room("Room1", "John"));
+        cj.getRooms().add(new Room("Room2", "John2"));
 
-        Message m1 = new Message("John", "Hello World","1");
-        Message m2 = new Message("John", "Hello ","2");
-        Message m3 = new Message("John", "Hello loco","3");
+        //add messages from John to the Room1
+        cj.getRooms().get(0).getMessages().add(new Message("John", "Hello World from John","Room1"));
+        cj.getRooms().get(0).getMessages().add(new Message("John", "Hello from John","Room1"));
+        cj.getRooms().get(0).getMessages().add(new Message("John", "Hello loco from John","Room1"));
 
-        Room r1 = new Room("Room1", "John");
-        Room r2 = new Room("Room2", "John");
-        Room r3 = new Room("Room3", "John");
+        cj.getRooms().get(0).getMessages().add(new Message("John2", "Hello World from John2","Room1"));
+        cj.getRooms().get(0).getMessages().add(new Message("John2", "Hello from John2","Room1"));
+        cj.getRooms().get(0).getMessages().add(new Message("John2", "Hello loco from John2","Room1"));
 
-        r1.getMessages().add(m1);
-        r1.getMessages().add(m2);
-        r1.getMessages().add(m3);
+        cj.getRooms().get(1).getMessages().add(new Message("John", "Hello World from John","Room2"));
+        cj.getRooms().get(1).getMessages().add(new Message("John", "Hello from John","Room2"));
+        cj.getRooms().get(1).getMessages().add(new Message("John", "Hello loco from John","Room2"));
 
-        r2.getMessages().add(m1);
-        r2.getMessages().add(m2);
-        r2.getMessages().add(m3);
-
-        r3.getMessages().add(m1);
-        r3.getMessages().add(m2);
-        r3.getMessages().add(m3);
-
-        cj.getRooms().add(r1);
-        cj.getRooms().add(r2);
-        cj.getRooms().add(r3);
+        cj.getRooms().get(1).getMessages().add(new Message("John2", "Hello World from John2","Room2"));
+        cj.getRooms().get(1).getMessages().add(new Message("John2", "Hello from John2","Room2"));
+        cj.getRooms().get(1).getMessages().add(new Message("John2", "Hello loco from John2","Room2"));
 
         JAXBManager.marshall("src/test/resources/chat.xml", cj);
     }
