@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.App;
+import client.Client;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Room;
 import utils.Utils;
@@ -15,9 +17,12 @@ import utils.Utils;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RoomsC implements Initializable {
+public class RoomsC extends Client implements Initializable {
 
-
+    public RoomsC() {
+        super();
+        Client.controller=this;
+    }
 
     @FXML
     private TableView<Room> roomsTable;
@@ -31,6 +36,9 @@ public class RoomsC implements Initializable {
     @FXML
     private ToggleButton darkMode;
 
+    @FXML
+    private AnchorPane anchorPane;
+
     /**
      * Cargar rooms
      * @param url
@@ -40,7 +48,7 @@ public class RoomsC implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         roomList();
         roomsTable.refresh();
-        Utils.closeRequest(new Stage());
+        //Utils.closeRequest((Stage) anchorPane.getScene().getWindow());
     }
 
     public void roomList(){
@@ -70,6 +78,12 @@ public class RoomsC implements Initializable {
     }
 
     private void goExit(){
-        App.loadScene(new Stage(),"gui/SingInChat","ChatJVA",true,true);
+        App.loadScene(new Stage(),"gui/SignInChat","ChatJVA",true,true);
+        App.closeScene((Stage) exit.getScene().getWindow());
+    }
+
+    @Override
+    public void refresh() {
+
     }
 }

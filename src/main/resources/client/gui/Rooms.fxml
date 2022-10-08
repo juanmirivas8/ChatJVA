@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="536.0" prefWidth="503.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.RoomsC">
+<AnchorPane fx:id="anchorPane" prefHeight="536.0" prefWidth="503.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.RoomsC">
    <children>
-      <HBox layoutY="4.0" prefHeight="37.0" prefWidth="512.0" stylesheets="@css/style.css">
+      <HBox layoutY="4.0" prefHeight="37.0" prefWidth="512.0">
          <children>
             <Button fx:id="exit" mnemonicParsing="false" onAction="#exit" prefHeight="28.0" prefWidth="14.0">
                <HBox.margin>

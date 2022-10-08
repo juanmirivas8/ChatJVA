@@ -21,7 +21,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage){
-        loadScene(new Stage(),"gui/Home","Bienvenido a ChatJVA",false,false);
+        loadScene(new Stage(),"gui/SignInChat","Bienvenido a ChatJVA",false,false);
     }
 
     /**
