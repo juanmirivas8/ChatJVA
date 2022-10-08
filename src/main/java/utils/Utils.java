@@ -1,5 +1,6 @@
 package utils;
 
+import client.Client;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -103,7 +104,7 @@ public class Utils {
         alert.showAndWait();
     }
 
-    public static void closeRequest(Stage stage){
+    public static void closeRequest(Stage stage, Client client){
         stage.setOnCloseRequest(windowEvent -> {
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
             a.setTitle("Confirmacion de cierre");
@@ -111,7 +112,7 @@ public class Utils {
             Stage s =(Stage)a.getDialogPane().getScene().getWindow();
             s.initOwner(stage);
             s.toFront();
-            a.showAndWait().filter(buttonType -> buttonType== ButtonType.OK).ifPresentOrElse(buttonType -> Platform.exit(),windowEvent::consume);
+            a.showAndWait().filter(buttonType -> buttonType== ButtonType.OK).ifPresentOrElse(buttonType -> {Platform.exit();client.localExit();},windowEvent::consume);
         });
     }
 

@@ -1,6 +1,7 @@
 package client;
 
 import model.*;
+import server.ClientHandler;
 import utils.MyLogger;
 
 import java.io.IOException;
@@ -22,12 +23,10 @@ public abstract class Client {
     protected static String username;
     protected static String chat;
     protected static Client controller;
-
     protected static ChatJAXB chatJAXB;
     public Client(){
         try{
             if(!instance){
-                username="";
                 socket = new Socket("localhost", 8080);
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
