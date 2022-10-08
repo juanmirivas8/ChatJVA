@@ -27,6 +27,7 @@ public abstract class Client {
     public Client(){
         try{
             if(!instance){
+                username="";
                 socket = new Socket("localhost", 8080);
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
@@ -43,6 +44,16 @@ public abstract class Client {
     /**************************************************************************
      * ChatJAXB && Controller Handling
      *************************************************************************/
+
+    public void localExit(){
+        //send logout instruction
+        try {
+            objectOutputStream.writeObject(new Instruction(username,Command.EXIT,username));
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,e.getMessage());
+        }
+        closeEverything();
+    }
     public boolean localAddUser(User user){
         if(chatJAXB.addUser(user)){
             broadcastNewUser(user);
@@ -61,15 +72,11 @@ public abstract class Client {
             return false;
         }
     }
-
-
-
     public void localAddMessage(Message message){
         chatJAXB.addMessage(message);
         broadcastNewMessage(message);
         refresh();
     }
-
     public boolean localLogin(User user){
         if(chatJAXB.login(user)){
             username = user.getNickname();
@@ -78,13 +85,11 @@ public abstract class Client {
         }else{
             return false;
         }
-
     }
-
     public void localLogout(){
         chatJAXB.logout(username);
         broadcastLogout(username);
-        username = null;
+        username = "null";
     }
 
 
@@ -176,7 +181,7 @@ public abstract class Client {
 
     private void listen(){
         new Thread(() -> {
-            while (socket.isConnected()){
+            while (!socket.isClosed()){
                 try {
                     Instruction i = (Instruction) objectInputStream.readObject();
                     switch (i.getCommand()){

@@ -16,6 +16,7 @@ public class SignInC extends Client {
     public SignInC() {
         super();
         Client.controller = this;
+        LOGGER.info(chatJAXB.toString());
     }
 
     @FXML
