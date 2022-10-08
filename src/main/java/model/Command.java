@@ -7,5 +7,7 @@ public enum Command {
     LEAVE_ROOM,
     CREATE_USER,
     LOGIN,
-    LOGOUT
+    LOGOUT,
+
+    EXIT
 }
