@@ -23,8 +23,8 @@ public class ClientHandler implements Runnable {
     public ClientHandler(Socket socket, ChatJAXB chatJAXB) {
         this.socket = socket;
         ClientHandler.chatJAXB = chatJAXB;
-        username="";
         try {
+            username="";
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
             clients.add(this);
@@ -123,10 +123,9 @@ public class ClientHandler implements Runnable {
         User user = (User) i.getObject();
         chatJAXB.addUser(user);
 
-
         clients.forEach(clientHandler -> {
             try {
-                if(!clientHandler.username.equals(i.getUsername())){
+                if(!clientHandler.username.equals(i.getUsername())||clientHandler.username.equals("")){
                     clientHandler.objectOutputStream.writeObject(i);
                 }
             } catch (IOException e) {

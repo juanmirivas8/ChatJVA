@@ -1,6 +1,8 @@
 package client.gui;
 
+import client.App;
 import client.Client;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import model.User;
 import utils.Utils;
 
 import java.io.IOException;
@@ -41,37 +44,42 @@ public class SignInC extends Client implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //Utils.closeRequest((Stage) hBox.getScene().getWindow());
+        Platform.runLater(() -> {
+            Utils.closeRequest((Stage) hBox.getScene().getWindow(),this);
+        });
     }
 
     @FXML
     private void eventRegistro(ActionEvent event) throws IOException {
-        Object evt = event.getSource();
-        if(evt.equals(btnSignIn)){
-            client.App.loadScene(new Stage(),"SignUpChat","Pantalla Principal", false, false);
-        }
+        client.App.loadScene(new Stage(),"gui/SignUpChat","Login ChatJVA", false, false);
+        App.closeScene((Stage) hBox.getScene().getWindow());
     }
     @FXML
     private void eventAction(ActionEvent event) throws IOException {
-        Object evt = event.getSource();
-        if(evt.equals(btnSignIn)){
-            if(!txtUser.getText().isEmpty() && !txtPass.getText().isEmpty()){
-                String user = txtUser.getText();
-                String pass = txtPass.getText();
-                /*if(){
+        String username = txtUser.getText();
+        String password = txtPass.getText();
 
-                }*/
+        if (username.isEmpty() || password.isEmpty()) {
+            Utils.mostrarAlerta("Error", "Campos vacíos", "Usuario y/o contraseña vacíos");
+            txtUser.setText("");
+            txtPass.setText("");
+        } else {
+            password=Utils.encryptSHA256(password);
+            User user = new User(username, password);
+            if(localLogin(user)){
+                App.loadScene(new Stage(),"gui/Home","ChatJVA", false, false);
+                App.closeScene((Stage) hBox.getScene().getWindow());
             }else{
-                //Usar alerta de utils
+                Utils.mostrarAlerta("Error", "Usuario o contraseña incorrectos", "Usuario o contraseña incorrectos");
+                txtUser.setText("");
+                txtPass.setText("");
             }
-        }else{
-            //Usar alerta de utils
         }
     }
 
     @Override
     public void refresh() {
-        //if ()
+
     }
 
 }

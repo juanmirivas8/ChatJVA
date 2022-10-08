@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.SignUpC">
+<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.SignUpC">
    <children>
       <VBox alignment="CENTER" style="-fx-background-color: #AD4713;">
          <children>
@@ -68,6 +67,14 @@
 
             <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#eventAction" style="-fx-background-color: #48B3FA;" text="Sign up" textAlignment="CENTER" textFill="WHITE">
 
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnAtras" layoutX="161.0" layoutY="379.0" mnemonicParsing="false" onAction="#atrasAction" style="-fx-background-color: red;" text="Atrás" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>

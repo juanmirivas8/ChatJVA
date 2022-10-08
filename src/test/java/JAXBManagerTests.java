@@ -4,6 +4,7 @@ import model.Room;
 import model.User;
 import org.junit.jupiter.api.Test;
 import utils.JAXBManager;
+import utils.Utils;
 
 public class JAXBManagerTests {
     //test marshalling
@@ -59,8 +60,8 @@ public class JAXBManagerTests {
         ChatJAXB cj = new ChatJAXB();
 
        //add users to the chat
-        cj.getUsers().add(new User("John", "holamundo"));
-        cj.getUsers().add(new User("John2", "holamundo2"));
+        cj.getUsers().add(new User("John", Utils.encryptSHA256("holamundo")));
+        cj.getUsers().add(new User("John2", Utils.encryptSHA256("holamundo2")));
 
         //add rooms to the chat
         cj.getRooms().add(new Room("Room1", "John"));

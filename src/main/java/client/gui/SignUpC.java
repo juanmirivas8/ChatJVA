@@ -1,6 +1,8 @@
 package client.gui;
 
+import client.App;
 import client.Client;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import model.User;
 import utils.Utils;
 
 import java.io.IOException;
@@ -19,44 +22,54 @@ public class SignUpC extends Client implements Initializable {
 
     public SignUpC() {
         super();
-        Client.controller=this;
+        controller=this;
     }
 
     @FXML
     private TextField txtUser;
 
     @FXML
-    private Button btnSignUp;
+    private Button btnSignUp,btnAtras;
 
     @FXML
     private PasswordField txtPass;
-
-    @FXML
-    private HBox hBox;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //Utils.closeRequest((Stage) hBox.getScene().getWindow());
+        Platform.runLater(() -> {
+            Utils.closeRequest((Stage) btnAtras.getScene().getWindow(),this);
+        });
     }
 
     @FXML
     private void eventAction(ActionEvent event) throws IOException {
-        Object evt = event.getSource();
-        if(evt.equals(btnSignUp)){
-            if(!txtUser.getText().isEmpty() && !txtPass.getText().isEmpty()){
-                String user = txtUser.getText();
-                String pass = txtPass.getText();
-                /*if(){
+        String username = txtUser.getText();
+        String password = txtPass.getText();
 
-                }*/
+        if (username.isEmpty() || password.isEmpty()) {
+            Utils.mostrarAlerta("Error", "Campos vacíos", "Usuario y/o contraseña vacíos");
+            txtUser.setText("");
+            txtPass.setText("");
+        } else {
+            password=Utils.encryptSHA256(password);
+            User user = new User(username, password);
+            if(localAddUser(user)){
+                App.loadScene(new Stage(),"gui/SignInChat","Login", false, false);
+                App.closeScene((Stage) btnAtras.getScene().getWindow());
             }else{
-                //Usar alerta de utils
+                Utils.mostrarAlerta("Error", "Usuario o contraseña incorrectos", "Usuario o contraseña incorrectos");
+                txtUser.setText("");
+                txtPass.setText("");
             }
-        }else{
-            //Usar alerta de utils
         }
+    }
+
+    @FXML
+    private void atrasAction(ActionEvent event) throws IOException {
+        App.loadScene(new Stage(),"gui/SignInChat","Login", false, false);
+        App.closeScene((Stage) btnAtras.getScene().getWindow());
     }
 
     @Override
