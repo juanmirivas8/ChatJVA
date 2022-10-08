@@ -17,8 +17,7 @@ import java.util.ResourceBundle;
 
 public class RoomsC implements Initializable {
 
-    App a = new App();
-    private static Stage stg=new Stage();
+
 
     @FXML
     private TableView<Room> roomsTable;
@@ -41,7 +40,7 @@ public class RoomsC implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         roomList();
         roomsTable.refresh();
-        Utils.closeRequest(stg);
+        Utils.closeRequest(new Stage());
     }
 
     public void roomList(){
@@ -53,7 +52,7 @@ public class RoomsC implements Initializable {
     }
 
     public void selectRoom(){
-        App.loadScene(stg,"Home.fxml","ChatJVA",true,true);
+        App.loadScene(new Stage(),"gui/Home","ChatJVA",true,true);
     }
 
     public void selectDarkMode(){
@@ -71,6 +70,6 @@ public class RoomsC implements Initializable {
     }
 
     private void goExit(){
-        App.loadScene(stg,"SingInChat.fxml","ChatJVA",true,true);
+        App.loadScene(new Stage(),"gui/SingInChat","ChatJVA",true,true);
     }
 }
