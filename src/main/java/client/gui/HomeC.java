@@ -76,14 +76,14 @@ public class HomeC extends Client implements Initializable {
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*
+
         this.roomName.setText(this.chat);
         messageList();
         usersList();
         messageTable.refresh();
         usersTable.refresh();
 
-         */
+
         //Utils.closeRequest((Stage) borderPane.getScene().getWindow());
 
     }

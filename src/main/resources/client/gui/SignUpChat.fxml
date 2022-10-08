@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.SignUpC">
+<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.SignUpC">
    <children>
       <VBox alignment="CENTER" style="-fx-background-color: #AD4713;">
          <children>
