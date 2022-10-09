@@ -22,13 +22,13 @@ public class Server {
 
     public void startServer() {
        try{
-           chatJAXB = JAXBManager.unmarshall("src/main/resources/chat.xml",ChatJAXB.class);
+           chatJAXB = JAXBManager.unmarshall("chat.xml",ChatJAXB.class);
 
            Timer timer = new Timer(true);
            timer.scheduleAtFixedRate(new TimerTask() {
                @Override
                public void run() {
-                   JAXBManager.marshall("src/main/resources/chat.xml",chatJAXB);
+                   JAXBManager.marshall("chat.xml",chatJAXB);
                    //TODO:borrar despues de los test
                    System.out.println(chatJAXB);
                }

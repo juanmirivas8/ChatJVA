@@ -27,7 +27,7 @@ public abstract class Client {
     public Client(){
         try{
             if(!instance){
-                socket = new Socket("localhost", 8080);
+                socket = new Socket("3.222.198.130", 8082);
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 chatJAXB = (ChatJAXB) objectInputStream.readObject();
