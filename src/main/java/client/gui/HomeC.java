@@ -78,9 +78,6 @@ public class HomeC extends Client implements Initializable {
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println(listUsers);
-        System.out.println(listMessage);
-
         this.roomName.setText(room.getName());
 
 
@@ -103,46 +100,6 @@ public class HomeC extends Client implements Initializable {
             }
         });
     }
-
-
-    /*
-    private List<ChatJAXB> readXMLData() throws ParserConfigurationException, IOException, SAXException, XMLStreamException {
-
-        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Document xmlDoc = docBuilder.parse(new InputSource(new FileReader(chatName)));
-        Element root = xmlDoc.getDocumentElement();
-        if (! root.getTagName().equals("chat")){
-            //throw new XMLStreamException("Root element must be a Chat");
-            System.out.println("hola");
-        }
-        List<ChatJAXB> chat = new ArrayList<ChatJAXB>();
-
-        NodeList chatNodeList = root.getElementsByTagName("message");
-        int numChat = chatNodeList.getLength();
-        for (int i = 0; i < numChat ; i++) {
-            Node chatNode = chatNodeList.item(i);
-            String userName = "";
-            String content = "";
-            String date = "";
-            NodeList chatChildNodes = chatNode.getChildNodes();
-            for (int j = 0; j < chatChildNodes.getLength() ; j++) {
-                Node childNode = chatChildNodes.item(j);
-                if (childNode.getNodeName().equals("userNickname")){
-                    userName = childNode.getTextContent();
-                }else if (childNode.getNodeName().equals("content")){
-                    content=childNode.getTextContent();
-                }else if (childNode.getNodeName().equals("time")){
-                    date = childNode.getTextContent();
-                }
-            }
-            chat.add(new ChatJAXB());
-            listMessage.add(new Message(userName,content,this.chat));
-            System.out.println(listMessage);
-        }
-
-        return chat;
-    }
-     */
 
     public void messageList(){
         userMessageColumn.setCellValueFactory(message ->{
@@ -170,11 +127,6 @@ public class HomeC extends Client implements Initializable {
             ssp.setValue(user.getValue());
             return ssp;
         });
-
-        if (listUsers.remove(room.getUserNickname())){
-            observableUsers.removeAll(observableUsers);
-            observableUsers.addAll(listUsers);
-        }
     }
 
 
@@ -184,8 +136,6 @@ public class HomeC extends Client implements Initializable {
             Message m = new Message(this.username,n,this.chat);
             this.localAddMessage(m);
             messageWriter.clear();
-            observableMessage.removeAll(observableMessage);
-            observableMessage.addAll(listMessage);
             refresh();
         }
     }
@@ -205,6 +155,7 @@ public class HomeC extends Client implements Initializable {
     }
 
     private void goExit(){
+        localLeaveRoom();
         App.loadScene(new Stage(),"gui/Rooms","ChatJVA",false,false);
         App.closeScene((Stage) exit.getScene().getWindow());
     }
@@ -212,11 +163,9 @@ public class HomeC extends Client implements Initializable {
 
     @Override
     public void refresh() {
-        if (messageTable!=null){
-
-        }
-        if (usersTable!=null){
-
-        }
+        observableMessage.removeAll(observableMessage);
+        observableMessage.addAll(listMessage);
+        observableUsers.removeAll(observableUsers);
+        observableUsers.addAll(listUsers);
     }
 }
