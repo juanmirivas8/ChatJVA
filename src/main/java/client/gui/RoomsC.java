@@ -4,6 +4,9 @@ import client.App;
 import client.Client;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,19 +26,21 @@ public class RoomsC extends Client implements Initializable {
     public RoomsC() {
         super();
         Client.controller=this;
+        rooms = FXCollections.observableArrayList(chatJAXB.getRooms());
     }
 
+    private ObservableList<Room> rooms;
     @FXML
     private TableView<Room> roomsTable;
 
     @FXML
-    private TableColumn<Room, String> room;
+    private TableColumn<Room, String> owner;
 
     @FXML
-    private Button exit;
+    private TableColumn<Room, String> name;
 
     @FXML
-    private ToggleButton darkMode;
+    private Button exit,create,join;
 
     @FXML
     private AnchorPane anchorPane;
@@ -47,46 +52,45 @@ public class RoomsC extends Client implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        roomList();
-        roomsTable.refresh();
-        Platform.runLater(()->{
-            Utils.closeRequest((Stage) anchorPane.getScene().getWindow(),controller);
-        });
-    }
+        roomsTable.setItems(rooms);
 
-    public void roomList(){
-        room.setCellValueFactory(r ->{
-            SimpleStringProperty ssp = new SimpleStringProperty();
-            ssp.setValue(r.getValue().getName());
-            return ssp;
-        });
-    }
+        owner.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUserNickname()));
 
-    public void selectRoom(){
-        App.loadScene(new Stage(),"gui/Home","ChatJVA",false,false);
-    }
+        name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 
-    public void selectDarkMode(){
-        darkMode.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-            if (isSelected) {
-                //scene.getStyleSheets().add("dark-theme.css");
-            } else {
-                //scene.getStyleSheets().remove("dark-theme.css");
+        create.onMouseClickedProperty().setValue(event -> {
+            String roomName = Utils.showDialogString((Stage)create.getScene().getWindow(), "New Room", "Room name","Insert the name of the room",30);
+            Room room = new Room(roomName,username);
+
+            if (!localAddRoom(room)) {
+                Utils.mostrarAlerta("Error", "Error al crear sala", "Nombre repetido");
             }
         });
-    }
 
-    public void exit(){
-        goExit();
-    }
+        join.onMouseClickedProperty().setValue(event -> {
+            Room room = roomsTable.getSelectionModel().getSelectedItem();
+            if (room != null) {
+                localJoinRoom(room);
+                App.loadScene(new Stage(),"gui/Home",chat,false,false);
+                App.closeScene((Stage) exit.getScene().getWindow());
+            }else{
+                Utils.mostrarAlerta("Error", "No se ha seleccionado ninguna sala", "Por favor, seleccione una sala de la lista");
+            }
+        });
 
-    private void goExit(){
-        App.loadScene(new Stage(),"gui/SignInChat","ChatJVA",false,false);
-        App.closeScene((Stage) exit.getScene().getWindow());
-    }
+        exit.onMouseClickedProperty().setValue(event -> {
+            localLogout();
+            App.loadScene(new Stage(),"gui/SignInChat",chat,false,false);
+            App.closeScene((Stage) exit.getScene().getWindow());
+        });
 
+        Platform.runLater(()->{
+            Utils.closeRequest((Stage) anchorPane.getScene().getWindow(),this);
+        });
+    }
     @Override
     public void refresh() {
-
+        rooms.removeAll(rooms);
+        rooms.addAll(chatJAXB.getRooms());
     }
 }

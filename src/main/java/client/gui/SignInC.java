@@ -67,7 +67,7 @@ public class SignInC extends Client implements Initializable {
             password=Utils.encryptSHA256(password);
             User user = new User(username, password);
             if(localLogin(user)){
-                App.loadScene(new Stage(),"gui/Home","ChatJVA", false, false);
+                App.loadScene(new Stage(),"gui/Rooms","ChatJVA", false, false);
                 App.closeScene((Stage) hBox.getScene().getWindow());
             }else{
                 Utils.mostrarAlerta("Error", "Usuario o contraseña incorrectos", "Usuario o contraseña incorrectos");
