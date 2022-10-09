@@ -17,7 +17,7 @@
    <bottom>
       <HBox prefHeight="48.0" prefWidth="600.0" styleClass="bottonColor" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="messageWriter" prefHeight="36.0" prefWidth="366.0" promptText="Escribir mensaje" styleClass="messageBar">
+            <TextField fx:id="messageWriter" onAction="#enter" prefHeight="36.0" prefWidth="366.0" promptText="Escribir mensaje" styleClass="messageBar">
                <HBox.margin>
                   <Insets left="30.0" right="20.0" top="5.0" />
                </HBox.margin>
@@ -48,7 +48,7 @@
         <columns>
           <TableColumn fx:id="userMessageColumn" prefWidth="101.0" />
           <TableColumn fx:id="messageMessageColumn" prefWidth="293.0" />
-            <TableColumn fx:id="dateMessageColumn" minWidth="5.0" prefWidth="81.0" />
+            <TableColumn fx:id="dateMessageColumn" minWidth="5.0" prefWidth="94.0" />
         </columns>
       </TableView>
    </center>
@@ -86,7 +86,7 @@
       </VBox>
    </top>
    <right>
-      <TableView fx:id="usersTable" onSort="#usersList" prefHeight="360.0" prefWidth="134.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="usersTable" onSort="#usersList" prefHeight="360.0" prefWidth="121.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="usersColumn" prefWidth="133.0" text="Users" />
         </columns>
