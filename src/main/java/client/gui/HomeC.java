@@ -3,6 +3,7 @@ package client.gui;
 import client.App;
 import client.Client;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,10 +15,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Message;
 import model.Room;
-import model.User;
 import utils.Utils;
 
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -44,9 +45,6 @@ public class HomeC extends Client implements Initializable {
 
     @FXML
     private TextField messageWriter;
-
-    @FXML
-    private ToggleButton darkMode;
 
     @FXML
     private Label roomName;
@@ -116,7 +114,9 @@ public class HomeC extends Client implements Initializable {
 
         dateMessageColumn.setCellValueFactory(message ->{
             SimpleStringProperty ssp = new SimpleStringProperty();
-            ssp.setValue(message.getValue().getTime().toString());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+            String formateDateTime = message.getValue().getTime().format(formatter);
+            ssp.setValue(formateDateTime);
             return ssp;
         });
     }
@@ -138,16 +138,6 @@ public class HomeC extends Client implements Initializable {
             messageWriter.clear();
             refresh();
         }
-    }
-
-    public void selectDarkMode(){
-        darkMode.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-            if (isSelected) {
-                //scene.getStyleSheets().add("dark-theme.css");
-            } else {
-                //scene.getStyleSheets().remove("dark-theme.css");
-            }
-        });
     }
 
     public void exit(){

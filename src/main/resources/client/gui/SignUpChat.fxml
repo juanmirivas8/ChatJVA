@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="503.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.SignUpC">
+<HBox prefHeight="503.0" prefWidth="854.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.SignUpC">
    <children>
-      <VBox alignment="CENTER" style="-fx-background-color: #AD4713;">
+      <VBox alignment="CENTER">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="280.0" text="User Sign Up" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -84,7 +84,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox alignment="CENTER" fillWidth="false" prefHeight="503.0" prefWidth="457.0" style="-fx-background-color: #AD4713;">
+      <VBox alignment="CENTER" fillWidth="false" prefHeight="503.0" prefWidth="457.0">
          <children>
             <Label alignment="CENTER" prefHeight="60.0" prefWidth="208.0" style="-fx-border-radius: 20px; -fx-border-color: white;" text="ChatJVA" textAlignment="CENTER" textFill="WHITE">
                <font>
