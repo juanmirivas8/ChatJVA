@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import utils.MyLogger;
 
 import java.io.IOException;
@@ -53,6 +55,7 @@ public class App extends Application {
         stage.setScene(new Scene(loadFXML(fxml)));
         stage.setTitle(title);
         stage.setResizable(isResizable);
+        new JMetro(Style.LIGHT).setScene(stage.getScene());
         if (SaW)
             stage.showAndWait();
         else
