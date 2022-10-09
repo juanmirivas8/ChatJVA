@@ -4,6 +4,7 @@ import model.ChatJAXB;
 import utils.JAXBManager;
 import utils.MyLogger;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,15 +22,18 @@ public class Server {
     }
 
     public void startServer() {
-       try{
-           chatJAXB = JAXBManager.unmarshall("chat.xml",ChatJAXB.class);
-
+        File f= new File("chat.xml");
+        if(f.isFile() && !f.isDirectory()) {
+            chatJAXB = JAXBManager.unmarshall("chat.xml",ChatJAXB.class);
+        } else {
+            chatJAXB = new ChatJAXB();
+        }
+        try{
            Timer timer = new Timer(true);
            timer.scheduleAtFixedRate(new TimerTask() {
                @Override
                public void run() {
                    JAXBManager.marshall("chat.xml",chatJAXB);
-                   //TODO:borrar despues de los test
                    System.out.println(chatJAXB);
                }
            },10000,10000);

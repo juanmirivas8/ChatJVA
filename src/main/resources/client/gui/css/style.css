@@ -1,0 +1,72 @@
+.principalColor{
+    -fx-background-color: #E2E8E4;
+}
+
+.backgroundColor{
+    -fx-background-color: rgba(255, 238, 232, 0.58);
+}
+
+.colorTransparent{
+    -fx-border-color: transparent;
+}
+
+.button{
+    -fx-cursor: hand;
+    -fx-background-color: rgba(220, 225, 252, 0.78);
+}
+
+.button:hover{
+    -fx-background-color: rgba(187, 186, 186, 0.23);
+}
+.button:pressed{
+    -fx-background-color: rgba(159, 166, 255, 0.78);
+}
+
+.toggle-button{
+    -fx-cursor: hand;
+    -fx-background-color: rgba(220, 225, 252, 0.78);
+}
+
+.toggle-button:hover{
+    -fx-background-color: rgba(187, 186, 186, 0.23);
+}
+.toggle-button:pressed{
+    -fx-background-color: rgba(159, 166, 255, 0.78);
+}
+
+.table-view .column-header .label{
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+
+}
+
+.table-view .column-header,
+.table-view .column-header-background .filler{
+    -fx-cell-size: 20;
+    -fx-background-color: rgba(220, 225, 252, 0.78);
+}
+
+.table-view .cell{
+    -fx-cell-size: 30;
+    -fx-alignment: center-left;
+}
+
+.table-view.scroll-bar:horizontal .track,
+.table-view.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: derive(rgba(220, 225, 252, 0.78), 80%);
+    -fx-background-radius: 2em;
+    -fx-border-radius: 2em;
+}
+
+.table-view{
+    -fx-border-color: transparent transparent transparent rgba(220, 225, 252, 0.78);
+}
+
+.table-view.scroll-bar:horizontal .thumb,
+.table-view.scroll-bar:vertical .thumb{
+    -fx-background-color: derive(rgba(220, 225, 252, 0.78), 80%);
+    -fx-background-insets: 2,0,0;
+    -fx-background-radius: 2em;
+}
+
