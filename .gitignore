@@ -9,3 +9,4 @@ target
 !*.fxml
 !*.png
 !*.jpg
+!*.css

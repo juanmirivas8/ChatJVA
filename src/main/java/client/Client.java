@@ -3,10 +3,9 @@ package client;
 import model.*;
 import server.ClientHandler;
 import utils.MyLogger;
+import utils.Utils;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,16 @@ public abstract class Client {
     public Client(){
         try{
             if(!instance){
-                socket = new Socket("localhost", 8080);
+                /*InputStreamReader in = new InputStreamReader(new FileInputStream("conf.txt"));
+                BufferedReader br = new BufferedReader(in);
+                String line;
+                List<String> lines = new ArrayList<>();
+                while ((line = br.readLine()) != null){
+                    lines.add(line);
+                }
+                br.close();
+                in.close();*/
+                socket = new Socket("localhost", 8082);
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 chatJAXB = (ChatJAXB) objectInputStream.readObject();

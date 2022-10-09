@@ -9,6 +9,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class Utils {
      */
     public static List<String> getFileAsLines(String url){
         try {
-            InputStreamReader in = new InputStreamReader(Utils.class.getResourceAsStream(url));
+            InputStreamReader in = new InputStreamReader(new FileInputStream(url));
             BufferedReader br = new BufferedReader(in);
             String line;
             List<String> lines = new ArrayList<>();
