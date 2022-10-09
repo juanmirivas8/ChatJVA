@@ -88,7 +88,7 @@ public abstract class Client {
     public void localLogout(){
         chatJAXB.logout(username);
         broadcastLogout(username);
-        username = "null";
+        username = "";
     }
 
 

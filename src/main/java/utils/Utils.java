@@ -4,6 +4,8 @@ import client.Client;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -113,6 +115,28 @@ public class Utils {
             s.initOwner(stage);
             s.toFront();
             a.showAndWait().filter(buttonType -> buttonType== ButtonType.OK).ifPresentOrElse(buttonType -> {Platform.exit();client.localExit();},windowEvent::consume);
+        });
+    }
+
+    public static String showDialogString(Stage stage, String title, String header, String description, int max_characters){
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle(title);
+        dialog.setHeaderText(header);
+        dialog.setContentText(description);
+        Stage s =(Stage)dialog.getDialogPane().getScene().getWindow();
+        s.initOwner(stage);
+        s.toFront();
+        Utils.addTextLimiter(dialog.getEditor(),max_characters);
+        Optional<String> result = dialog.showAndWait();
+        return result.orElse(null);
+    }
+
+    public static void addTextLimiter(final TextField tf, final int maxLength) {
+        tf.textProperty().addListener((ov, oldValue, newValue) -> {
+            if (tf.getText().length() > maxLength) {
+                String s = tf.getText().substring(0, maxLength);
+                tf.setText(s);
+            }
         });
     }
 
