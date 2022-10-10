@@ -26,7 +26,7 @@ public abstract class Client {
     public Client(){
         try{
             if(!instance){
-                /*InputStreamReader in = new InputStreamReader(new FileInputStream("conf.txt"));
+                InputStreamReader in = new InputStreamReader(new FileInputStream("conf.txt"));
                 BufferedReader br = new BufferedReader(in);
                 String line;
                 List<String> lines = new ArrayList<>();
@@ -34,8 +34,8 @@ public abstract class Client {
                     lines.add(line);
                 }
                 br.close();
-                in.close();*/
-                socket = new Socket("localhost", 8082);
+                in.close();
+                socket = new Socket(lines.get(0), Integer.parseInt(lines.get(1)));
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 chatJAXB = (ChatJAXB) objectInputStream.readObject();
